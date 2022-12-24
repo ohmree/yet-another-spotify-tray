@@ -8,7 +8,7 @@ SpotifyTrayApp::SpotifyTrayApp(int &argc, char **argv): QApplication(argc, argv)
     setApplicationName("spotify-tray");
 
     bool show_window = true;
-
+    spotifyEnv = QProcessEnvironment::systemEnvironment();
     spotifyArgs = arguments();
     spotifyArgs.takeFirst();
     // This is not proper argument parsing, as in general arguments are passed to Spotify
@@ -62,6 +62,8 @@ SpotifyTrayApp::~SpotifyTrayApp() {
 // spawn a new process using the args if the window is not found
 // at the first attempt.
 WindowData SpotifyTrayApp::startSpotify(const QStringList& args) {
+    spotifyEnv.insert("LD_PRELOAD", "/usr/lib/spotify-adblock.so");
+    spotifyProcess.setProcessEnvironment(spotifyEnv);
     spotifyProcess.start(DEFAULT_CLIENT_APP_PATH, args, QIODevice::ReadOnly);
 
     // App launched, it double forks; need to find the window and PID

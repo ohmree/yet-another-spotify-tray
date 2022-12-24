@@ -15,6 +15,9 @@ class SpotifyTrayApp : public QApplication {
     // Spotify process handle
     QProcess spotifyProcess;
 
+    // Spotify process environment variables
+    QProcessEnvironment spotifyEnv;
+
     // Spotify window data
     WindowData spotify;
 
