@@ -32,7 +32,7 @@ SpotifyTrayApp::SpotifyTrayApp(int &argc, char **argv): QApplication(argc, argv)
 
     mainFrame = new SpotifyFrame();
 
-    if (spotify = getSpotifyWindow()) {
+    if ((spotify = getSpotifyWindow())) {
         qDebug("Spotify is already running (PID %lu)", spotify.pid);
     } else {
         spotify = startSpotify(spotifyArgs);
